@@ -6,13 +6,58 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:id="@+id/month"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00B2C0"
+            android:gravity="center"
+            android:padding="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_prev_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00e4e5"
+                android:text="@string/prev_month">
+
+            </Button>
+
+            <TextView
+                android:id="@+id/tv_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:background="#00e4e5"
+                android:padding="10dp"
+                android:text="@string/month" />
+
+            <Button
+                android:id="@+id/btn_next_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00e4e5"
+                android:text="@string/next_month" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lv_date_month"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/go_persones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/go_person">
+
+        </Button>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

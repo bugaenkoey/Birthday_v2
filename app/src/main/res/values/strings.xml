@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Birthday_v2</string>
+    <string name="prev_month">Prev</string>
+    <string name="next_month">Next</string>
+    <string name="month">month</string>
+    <string name="go_person">Person</string>
+    <string name="go_event">Event</string>
+    <string name="cancel">Cancel</string>
+    <string name="del">Del</string>
+    <string name="ok">OK</string>
+    <string name="go_add_event">AddEvent</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="del_confirm">Вы хотите удалить?</string>
+    <string name="surname">Surname</string>
+    <string name="name">name</string>
+    <string name="patronymic">patronymic</string>
+    <string name="phone">phone</string>
+
 </resources>
