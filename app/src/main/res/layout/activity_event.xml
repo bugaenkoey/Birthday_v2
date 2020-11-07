@@ -13,6 +13,7 @@
         android:orientation="vertical">
         <EditText
             android:id="@+id/surname_person"
+            android:inputType="textCapSentences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/surname"
@@ -21,6 +22,7 @@
         </EditText>
         <EditText
             android:id="@+id/name_person"
+            android:inputType="textCapSentences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/name"
@@ -28,7 +30,8 @@
 
         </EditText>
         <EditText
-            android:id="@+id/patronymic_persone"
+            android:id="@+id/patronymic_person"
+            android:inputType="textCapSentences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/patronymic"
@@ -36,7 +39,8 @@
 
         </EditText>
         <EditText
-            android:id="@+id/telephone_persone"
+            android:id="@+id/telephone_person"
+            android:inputType="phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/phone"
