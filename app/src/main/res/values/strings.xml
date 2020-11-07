@@ -3,6 +3,7 @@
     <string name="prev_month">Prev</string>
     <string name="next_month">Next</string>
     <string name="month">month</string>
+    <string name="all_person">All Person</string>
     <string name="go_person">Person</string>
     <string name="go_event">Event</string>
     <string name="cancel">Cancel</string>
@@ -16,5 +17,7 @@
     <string name="name">name</string>
     <string name="patronymic">patronymic</string>
     <string name="phone">phone</string>
+    <string name="date">Data</string>
+    <string name="event">Event</string>
 
 </resources>

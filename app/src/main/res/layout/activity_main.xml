@@ -53,7 +53,7 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/go_persones"
+            android:id="@+id/go_person"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/go_person">

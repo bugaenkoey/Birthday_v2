@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityEvent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/surname_person"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/surname"
+            >
+
+        </EditText>
+        <EditText
+            android:id="@+id/name_person"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/name"
+            >
+
+        </EditText>
+        <EditText
+            android:id="@+id/patronymic_persone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/patronymic"
+            >
+
+        </EditText>
+        <EditText
+            android:id="@+id/telephone_persone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/phone"
+            >
+
+        </EditText>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/cancel_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel">
+
+            </Button>
+            <Button
+                android:id="@+id/del_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/del">
+
+            </Button>
+            <Button
+                android:id="@+id/ok_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ok">
+
+            </Button>
+
+        </LinearLayout>
+        <ListView
+            android:id="@+id/lv_person"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+        </ListView>
+        <Button
+            android:id="@+id/go_add_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/go_add_event">
+
+        </Button>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
