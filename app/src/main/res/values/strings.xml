@@ -19,5 +19,7 @@
     <string name="phone">phone</string>
     <string name="date">Data</string>
     <string name="event">Event</string>
+    <string name="db_table_event">event</string>
+    <string name="db_table_person">person</string>
 
 </resources>
