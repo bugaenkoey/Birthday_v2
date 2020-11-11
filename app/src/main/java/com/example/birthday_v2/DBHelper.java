@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 public class DBHelper extends SQLiteOpenHelper {
 
     public final static String DB_NAME = "birthday";
-    public static final int dbVersion = 1;
+    public static final int dbVersion = 2;
     final String LOG_TAG = "LogsDBHelper";
 
 

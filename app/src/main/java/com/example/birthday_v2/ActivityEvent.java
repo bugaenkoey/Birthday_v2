@@ -10,8 +10,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import static com.example.birthday_v2.MainActivity.dbHelper;
 
@@ -33,6 +35,14 @@ public class ActivityEvent extends AppCompatActivity implements View.OnClickList
 
         btnGoAddEvent = (Button) findViewById(R.id.go_add_event);
         btnGoAddEvent.setOnClickListener(this);
+
+        inListEvent();
+        ListView lvEvent = (ListView) this.findViewById(R.id.list_event);
+        ArrayAdapter<Event> lvAdapter2 = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_single_choice,
+                event.arrayListEvent);
+        lvEvent.setAdapter(lvAdapter2);
+        lvEvent.setSelection(0);
     }
 
     @Override
@@ -85,7 +95,7 @@ public class ActivityEvent extends AppCompatActivity implements View.OnClickList
             int idColIndex = c.getColumnIndex("id");
             int dateColIndex = c.getColumnIndex("date");
             int eventColIndex = c.getColumnIndex("event");
-            int id_personColIndex = c.getColumnIndex("id_person");
+            int id_personColIndex = c.getColumnIndex("idperson");
 
             do {
                 Event event = new Event();

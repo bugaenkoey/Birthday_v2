@@ -26,12 +26,12 @@ public class ActivityPerson extends AppCompatActivity implements View.OnClickLis
         btnGoEvent.setOnClickListener(this);
 
         inListPerson();
-        ListView lvMonth = (ListView) this.findViewById(R.id.list_person);
+        ListView lvPerson = (ListView) this.findViewById(R.id.list_person);
         ArrayAdapter<Person> lvAdapter1 = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_single_choice,
                 person.arrayListPerson);
-        lvMonth.setAdapter(lvAdapter1);
-        lvMonth.setSelection(0);
+        lvPerson.setAdapter(lvAdapter1);
+        lvPerson.setSelection(0);
     }
 
     private void inListPerson() {

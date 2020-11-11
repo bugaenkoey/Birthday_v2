@@ -12,7 +12,6 @@ import android.widget.EditText;
 import static com.example.birthday_v2.MainActivity.dbHelper;
 
 public class ActivityAddEvent extends AppCompatActivity {
-    //    Button btnGoAddEvent;
     EditText etDate, etEvent;
 
     final String LOG_TAG = "LogsActivityEvent";
@@ -27,26 +26,26 @@ public class ActivityAddEvent extends AppCompatActivity {
 
     }
 
-    public void add_event(View view) {
+    public void on_click_add_event(View view) {
         // создаем объект для данных
-        ContentValues cv = new ContentValues();
+        ContentValues cve = new ContentValues();
 
         // получаем данные из полей ввода
         String date = etDate.getText().toString();
         String event = etEvent.getText().toString();
-        Integer id_person = 1;
+        int id_person = 1;
         // подключаемся к БД
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 //
 
         Log.d(LOG_TAG, "--- Insert in event table: ---");
         // подготовим данные для вставки в виде пар: наименование столбца - значение
-        cv.put("date", date);
-        cv.put("event", event);
-        cv.put("id_person", id_person);
+        cve.put("date", date);
+        cve.put("event", event);
+        cve.put("idperson", id_person);
 
         // вставляем запись и получаем ее ID
-        long rowID = db.insert("event", null, cv);
+        long rowID = db.insert("event", null, cve);
 
         Log.d(LOG_TAG, "row inserted event, ID = " + rowID);
     }
