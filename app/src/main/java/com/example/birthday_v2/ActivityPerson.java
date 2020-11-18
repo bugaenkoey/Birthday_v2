@@ -8,9 +8,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class ActivityPerson extends AppCompatActivity implements View.OnClickListener {
     Button btnGoEvent;
@@ -22,16 +25,42 @@ public class ActivityPerson extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
 
-        btnGoEvent = (Button)findViewById(R.id.go_event);
+        btnGoEvent = (Button) findViewById(R.id.go_event);
         btnGoEvent.setOnClickListener(this);
 
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         inListPerson();
         ListView lvPerson = (ListView) this.findViewById(R.id.list_person);
         ArrayAdapter<Person> lvAdapter1 = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_single_choice,
+                android.R.layout.simple_list_item_1,
                 person.arrayListPerson);
         lvPerson.setAdapter(lvAdapter1);
-        lvPerson.setSelection(0);
+//        lvPerson.setSelection(0);
+        //++++++++++++++++++++++
+        lvPerson.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int idPersone = person.arrayListPerson.get(position).idPerson;
+                Toast.makeText(ActivityPerson.this, "Выбрано ->" + String.valueOf(position)
+                        + " = " + parent.getAdapter().getItem(position), Toast.LENGTH_SHORT).show();
+                Log.d(LOG_TAG, "Выбрано ->" + String.valueOf(position)
+                        + " = " + parent.getAdapter().getItem(position) + " idPerson = "
+                        + person.arrayListPerson.get(position).idPerson);
+                //++++++++
+                Intent intent = new Intent(ActivityPerson.this, ActivityAddEvent.class);
+                intent.putExtra("position", position);
+                startActivity(intent);
+                //==========
+            }
+        });
+        //    lvPerson.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        //======================
     }
 
     private void inListPerson() {
@@ -81,7 +110,7 @@ public class ActivityPerson extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(this,ActivityEvent.class);
+        Intent intent = new Intent(this, ActivityEvent.class);
         startActivity(intent);
     }
 }

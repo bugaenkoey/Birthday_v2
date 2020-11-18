@@ -33,13 +33,13 @@ public class ActivityEvent extends AppCompatActivity implements View.OnClickList
         etPatronymic = (EditText) findViewById(R.id.patronymic_person);
         etTelephone = (EditText) findViewById(R.id.telephone_person);
 
-        btnGoAddEvent = (Button) findViewById(R.id.go_add_event);
-        btnGoAddEvent.setOnClickListener(this);
+//        btnGoAddEvent = (Button) findViewById(R.id.go_add_event);
+//        btnGoAddEvent.setOnClickListener(this);
 
         inListEvent();
         ListView lvEvent = (ListView) this.findViewById(R.id.list_event);
         ArrayAdapter<Event> lvAdapter2 = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_single_choice,
+                android.R.layout.simple_list_item_1,
                 event.arrayListEvent);
         lvEvent.setAdapter(lvAdapter2);
         lvEvent.setSelection(0);

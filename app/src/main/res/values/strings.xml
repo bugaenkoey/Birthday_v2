@@ -22,5 +22,5 @@
     <string name="db_table_event">event</string>
     <string name="db_table_person">person</string>
     <string name="add_person">+</string>
-
+    <string name="date_picker">Select Data</string>
 </resources>

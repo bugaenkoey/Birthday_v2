@@ -66,13 +66,13 @@
                 android:text="@string/cancel">
 
             </Button>
-            <Button
-                android:id="@+id/del_person"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/del">
+<!--            <Button-->
+<!--                android:id="@+id/del_person"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/del">-->
 
-            </Button>
+<!--            </Button>-->
             <Button
                 android:id="@+id/ok_person"
                 android:layout_width="wrap_content"
@@ -90,13 +90,13 @@
             >
 
         </ListView>
-        <Button
-            android:id="@+id/go_add_event"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/go_add_event">
+<!--        <Button-->
+<!--            android:id="@+id/go_add_event"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/go_add_event">-->
 
-        </Button>
+<!--        </Button>-->
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,48 +5,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ActivityAddEvent">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:ignore="MissingConstraints">
 
-    <EditText
-        android:id="@+id/add_date_event"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="date"
-        android:hint="@string/date"
-        />
-    <EditText
-        android:id="@+id/add_event"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textCapSentences"
-        android:hint="@string/event"/>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_horizontal">
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
 
-    <Button
-        android:id="@+id/cancel_event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/cancel"/>
-    <Button
-        android:id="@+id/del_event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/del"/>
-    <Button
-        android:id="@+id/ok_event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="on_click_add_event"
-        android:text="@string/ok"/>
+        <TextView
+            android:id="@+id/persona"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" />
 
-</LinearLayout>
-</LinearLayout>
+        <TextView
+            android:id="@+id/date_event"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:text="Date" />
+
+        <Button
+            android:id="@+id/date_pick"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:onClick="datePick"
+            android:text="@string/date_picker" />
+
+
+
+
+        <!--        <EditText-->
+        <!--            android:id="@+id/add_date_event"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:hint="@string/date"-->
+        <!--            android:inputType="date" />-->
+
+        <EditText
+            android:id="@+id/add_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:hint="@string/event"
+            android:inputType="textCapSentences" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cancel_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel" />
+
+<!--            <Button-->
+<!--                android:id="@+id/del_event"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/del" />-->
+
+            <Button
+                android:id="@+id/ok_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="on_click_add_event"
+                android:text="@string/ok" />
+
+        </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

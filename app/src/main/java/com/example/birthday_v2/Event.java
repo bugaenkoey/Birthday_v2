@@ -54,6 +54,6 @@ public class Event {
 //                ", idPerson=" + idPerson +
 //                '}';
 
-        return id + " " + date + " " + event;
+        return id + " " + date + " " + event + " "+idPerson;
     }
 }

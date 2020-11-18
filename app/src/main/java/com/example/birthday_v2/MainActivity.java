@@ -2,20 +2,30 @@ package com.example.birthday_v2;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -23,17 +33,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnGoPerson, btnPrev, btnNext;
     ListView listView;
     TextView textView;
-    int month;
     final String LOG_TAG = "LogsActivityMain";
-
     static DBHelper dbHelper;
     static Calendar calendar = Calendar.getInstance();
+    Date d = new Date();
+//    String simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy").format(d);
     int monthEvent = calendar.get(Calendar.MONTH) + 1;
-//    Date date = new Date(); // получаем текущую дату
-
-    //int year = date.getYear();
-//		int monthEvent = date.getMonth()+1;// номер месяца
-    //int dey = date.getDayOfMonth();// номер дня в месяце
+    ArrayList arrayListMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,45 +56,108 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textView.setText(String.valueOf(monthEvent));//преобразуем int месяца в  String
         // создаем объект для создания и управления версиями БД
         dbHelper = new DBHelper(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        arrayListMonth = new ArrayList();
+        inListMonth();
+        ListView lvMonth = (ListView) this.findViewById(R.id.lv_date_month);
+        // ListView lvEvent = (ListView) this.findViewById(R.id.list_event);
+        ArrayAdapter<Event> lvAdapterMonth = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1,
+                arrayListMonth);
+        lvMonth.setAdapter(lvAdapterMonth);
+        lvMonth.setSelection(0);
+        //++++++++++++++++++++++
+        lvMonth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "Выбрано ->" + String.valueOf(position)
+                        + " = " + parent.getAdapter().getItem(position), Toast.LENGTH_SHORT).show();
+
+                //++++++++
+//                Intent intent = new Intent(MainActivity.this, ActivityAddEvent.class);
+//                startActivity(intent);
+               //==========
+            }
+        });
 
     }
 
-//    @Override
-//    public void onClick(View v) {
-//
-//    }
+    private void inListMonth() {
+        arrayListMonth.clear();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-//    public void onClickPrev(View view) {
-//    }
-//
-//    public void onClickNext(View view) {
-//    }
-//
-//    public void onClickPerson(View view) {
-//        Intent intent = new Intent(this,ActivityPerson.class);
-//        startActivity(intent);
-//    }
+        // переменные для query
+        String[] columns = null;
+        String selection = null;
+        String[] selectionArgs = null;
+        String groupBy = null;
+        String having = null;
+        String orderBy = null;
+        // делаем запрос всех данных из таблицы event, получаем Cursor
+        Cursor cursor = db.query("event", null, null, null, null, null, null);
+        String newDate = new Date().toString();
+
+        Log.d(LOG_TAG, "@@@@@@@@======== " + newDate + "calendar.get(Calendar.MONTH)========@@@@@@@" + calendar.get(Calendar.MONTH));
+
+        // ставим позицию курсора на первую строку выборки
+        // если в выборке нет строк, вернется false
+        if (cursor.moveToFirst()) {
+            // определяем номера столбцов по имени в выборке
+            int idColIndex = cursor.getColumnIndex("id");
+            int dateColIndex = cursor.getColumnIndex("date");
+            int eventColIndex = cursor.getColumnIndex("event");
+            int id_personColIndex = cursor.getColumnIndex("idperson");
+
+                do {
+                    Event event = new Event();
+                    event.setId(cursor.getInt(idColIndex));
+                    event.setDate(cursor.getString(dateColIndex));
+                    event.setEvent(cursor.getString(eventColIndex));
+                    event.setIdPerson(cursor.getInt(id_personColIndex));
+
+                    Log.d(LOG_TAG, ">>>>>>>>>>> c.getString(dateColIndex) " + cursor.getString(dateColIndex));
+                    int nMontch = myGetMonth(event.getDate());
+                    Log.d(LOG_TAG,"<<<<<<<<<<<"+monthEvent+"<<<<<<<<<<<<<<<<<<"+nMontch);
+                    if (nMontch!=monthEvent) {
+                        Log.d(LOG_TAG, monthEvent + " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ if ");
+                        cursor.moveToNext();
+                        continue;
+                    }
+
+                    arrayListMonth.add(event);
+
+                    // получаем значения по номерам столбцов и пишем все в лог
+//                    Log.d(LOG_TAG,
+//                            "ID = " + cursor.getInt(idColIndex) +
+//                                    ", date = " + cursor.getString(dateColIndex) +
+//                                    ", event = " + cursor.getString(eventColIndex) +
+//                                    ", id_person = " + cursor.getString(id_personColIndex));
+                    // переход на следующую строку
+                    // а если следующей нет (текущая - последняя), то false - выходим из цикла
+                } while (cursor.moveToNext());
+        } else
+            cursor.close();
+    }
+
+    private int myGetMonth(String strGetDate) {
+        // разделение строки на части
+        String[] parts=strGetDate.split("-");
+        return Integer.parseInt(parts[1]);
+    }
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
             case R.id.btn_next_month:
-
-                // monthEvent = calendar.get(Calendar.MONTH)
-                calendar.add(Calendar.MONTH, 1);
-                monthEvent = calendar.get(Calendar.MONTH) + 1;
-
-                textView.setText(String.valueOf(monthEvent));//преобразуем int месяца в  String
-                Log.d(LOG_TAG, "--- btn_next_month: ---" + monthEvent);
+                changesMonth(1); // Увеличить на 1 месяц
                 break;
             case R.id.btn_prev_month:
-
-                calendar.add(Calendar.MONTH, -1);
-                monthEvent = calendar.get(Calendar.MONTH) + 1;
-
-                textView.setText(String.valueOf(monthEvent));//преобразуем int месяца в  String
-                Log.d(LOG_TAG, "--- btn_prev_month: ---" + monthEvent);
+                changesMonth(-1); // Увеличить на -1 месяц (уменьшить на 1 )
                 break;
             case R.id.go_person:
                 Log.d(LOG_TAG, "--- go_person: ---");
@@ -96,5 +165,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
         }
+
+    }
+
+    private void changesMonth(int i) {
+        calendar.add(Calendar.MONTH, i); // Увеличить на i месяцев
+        monthEvent = calendar.get(Calendar.MONTH) + 1; // +1 так как нумерация месяцев начинается с 0
+        textView.setText(String.valueOf(monthEvent));//преобразуем int месяца в  String
+        Log.d(LOG_TAG, "--- month: ---" + monthEvent);
+        onStart();
+//        inListMonth();
+
+    }
+
+    void msg() {
+        Log.d(LOG_TAG, "--- btnMsg: ---");
+        // Идентификатор уведомления
+        final int NOTIFY_ID = 101;
+        // Идентификатор канала
+        String CHANNEL_ID = "My channel";
+
+        String msgTitle = "Напоминание";
+        String msgText = "Сегодня День рождения";
+
+        Intent notificationIntent = new Intent(MainActivity.this, MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(MainActivity.this,
+                0, notificationIntent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
+
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(MainActivity.this, CHANNEL_ID)
+                        .setSmallIcon(R.drawable.ic_launcher_background)
+                        .setContentTitle(msgTitle)
+                        .setContentText(msgText)
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setContentIntent(contentIntent);
+
+        NotificationManagerCompat notificationManager =
+                NotificationManagerCompat.from(MainActivity.this);
+        notificationManager.notify(NOTIFY_ID, builder.build());
     }
 }

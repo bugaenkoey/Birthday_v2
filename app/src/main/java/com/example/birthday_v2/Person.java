@@ -8,12 +8,11 @@ public class Person {
     String patronymic;
     int idPerson;
     String telephone;
+//    Event event = new Event() ;
     static ArrayList<Person> arrayListPerson = new ArrayList<Person>();
-
 
     public Person() {
     }
-
     public String getSurname() {
         return surname;
     }

@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 public class DBHelper extends SQLiteOpenHelper {
 
     public final static String DB_NAME = "birthday";
-    public static final int dbVersion = 2;
+    public static final int dbVersion = 5;
     final String LOG_TAG = "LogsDBHelper";
 
 
@@ -30,7 +30,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 + ");");
         db.execSQL("create table event ("
                 + "id integer primary key autoincrement,"
-                + "date text, event text, idperson integer"
+                + "date integer, event text, idperson integer"
                 +");");
     }
 

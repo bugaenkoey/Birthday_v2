@@ -53,7 +53,9 @@
         <ListView
             android:id="@+id/lv_date_month"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0dp"
+            android:background="@color/colorAccent"
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/go_person"
