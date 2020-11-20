@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,6 +15,8 @@ import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -36,8 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     final String LOG_TAG = "LogsActivityMain";
     static DBHelper dbHelper;
     static Calendar calendar = Calendar.getInstance();
-    Date d = new Date();
-//    String simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy").format(d);
+//    Date d = new Date();
+    //    String simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy").format(d);
     int monthEvent = calendar.get(Calendar.MONTH) + 1;
     ArrayList arrayListMonth;
 
@@ -57,7 +61,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // создаем объект для создания и управления версиями БД
         dbHelper = new DBHelper(this);
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+//--- Получение идентификатора выбранного пункта меню---
+        int id = item.getItemId();
+        //--- Выполнение действия для выбранного пункта меню ---
+        switch (id) {
+//--- Выбран пункт меню "Settings" ------------------
+            case R.id.action_settings:
+                Toast.makeText(this,
+                        "Settings",
+                        Toast.LENGTH_LONG).show();
+                return true; //Пункт меню обработан
 
+            case R.id.about: {
+              //  msg = "author";
+                AlertDialog aboutDialog = new AlertDialog.Builder(MainActivity.this).create();
+                aboutDialog.setTitle("Разработчик программы");
+                aboutDialog.setMessage("(c)2020 студент академии ШАГ\nБугаенко Евгений.");
+                aboutDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }
+                );
+                aboutDialog.show();
+            }
+            break;
+        }
+            return super.onOptionsItemSelected(item);
+
+    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -80,10 +121,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //++++++++
 //                Intent intent = new Intent(MainActivity.this, ActivityAddEvent.class);
 //                startActivity(intent);
-               //==========
+                //==========
             }
         });
 
+    }
+
+    private void inListMonth2() {
+//        arrayListMonth.clear();
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//
+//        String query = "SELECT " + "id" + ", "
+//                + "date" + ", " + "event" + ", " + "idperson"
+//                + " FROM " + "event "
+//                +"WHERE date <> ?";
+//        Cursor cursor = db.rawQuery(query, new String[] {"13-06-1977"});
     }
 
     private void inListMonth() {
@@ -98,10 +150,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String having = null;
         String orderBy = null;
         // делаем запрос всех данных из таблицы event, получаем Cursor
-        Cursor cursor = db.query("event", null, null, null, null, null, null);
-        String newDate = new Date().toString();
+               Cursor cursor = db.query("event", null, null, null, null, null, null);
+//+++++++++++++++++++++++++++++
 
-        Log.d(LOG_TAG, "@@@@@@@@======== " + newDate + "calendar.get(Calendar.MONTH)========@@@@@@@" + calendar.get(Calendar.MONTH));
+//        String query = "SELECT * "// + "id" + ", " + "date" + ", " + "event" + ", " + "idperson"
+//                + " FROM " + "event "
+//                +"WHERE date <> ?";
+//        Cursor cursor = db.rawQuery(query, new String[] {"13-06-1977"});
+//====================
+//        String newDate = new Date().toString();
+//
+//        Log.d(LOG_TAG, "@@@@@@@@======== " + newDate + "calendar.get(Calendar.MONTH)========@@@@@@@" + calendar.get(Calendar.MONTH));
 
         // ставим позицию курсора на первую строку выборки
         // если в выборке нет строк, вернется false
@@ -112,40 +171,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int eventColIndex = cursor.getColumnIndex("event");
             int id_personColIndex = cursor.getColumnIndex("idperson");
 
-                do {
-                    Event event = new Event();
-                    event.setId(cursor.getInt(idColIndex));
-                    event.setDate(cursor.getString(dateColIndex));
-                    event.setEvent(cursor.getString(eventColIndex));
-                    event.setIdPerson(cursor.getInt(id_personColIndex));
+            do {
+                Event event = new Event();
+                event.setId(cursor.getInt(idColIndex));
+                event.setDate(cursor.getString(dateColIndex));
+                event.setEvent(cursor.getString(eventColIndex));
+                event.setIdPerson(cursor.getInt(id_personColIndex));
 
-                    Log.d(LOG_TAG, ">>>>>>>>>>> c.getString(dateColIndex) " + cursor.getString(dateColIndex));
-                    int nMontch = myGetMonth(event.getDate());
-                    Log.d(LOG_TAG,"<<<<<<<<<<<"+monthEvent+"<<<<<<<<<<<<<<<<<<"+nMontch);
-                    if (nMontch!=monthEvent) {
-                        Log.d(LOG_TAG, monthEvent + " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ if ");
-                        cursor.moveToNext();
-                        continue;
-                    }
+                Log.d(LOG_TAG, ">>>>>>>>>>> c.getString(dateColIndex) " + cursor.getString(dateColIndex));
+                int nMontch = myGetMonth(event.getDate());
+                Log.d(LOG_TAG, "<<<<<<<<<<<" + monthEvent + "<<<<<<<<<<<<<<<<<<" + nMontch);
 
-                    arrayListMonth.add(event);
+                if (nMontch != monthEvent) {
+                    Log.d(LOG_TAG, monthEvent + " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ if ");
+                    cursor.moveToNext();
+                    continue;
+                }
 
-                    // получаем значения по номерам столбцов и пишем все в лог
+                arrayListMonth.add(event);
+
+                // получаем значения по номерам столбцов и пишем все в лог
 //                    Log.d(LOG_TAG,
 //                            "ID = " + cursor.getInt(idColIndex) +
 //                                    ", date = " + cursor.getString(dateColIndex) +
 //                                    ", event = " + cursor.getString(eventColIndex) +
 //                                    ", id_person = " + cursor.getString(id_personColIndex));
-                    // переход на следующую строку
-                    // а если следующей нет (текущая - последняя), то false - выходим из цикла
-                } while (cursor.moveToNext());
+                // переход на следующую строку
+                // а если следующей нет (текущая - последняя), то false - выходим из цикла
+            } while (cursor.moveToNext());
         } else
             cursor.close();
     }
 
     private int myGetMonth(String strGetDate) {
         // разделение строки на части
-        String[] parts=strGetDate.split("-");
+        String[] parts = strGetDate.split("-");
         return Integer.parseInt(parts[1]);
     }
 
@@ -154,10 +214,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()) {
             case R.id.btn_next_month:
-                changesMonth(1); // Увеличить на 1 месяц
+                // Увеличить на 1 месяц
+                monthEvent = monthEvent == 12 ? 1 : ++monthEvent;
                 break;
             case R.id.btn_prev_month:
-                changesMonth(-1); // Увеличить на -1 месяц (уменьшить на 1 )
+                // Увеличить на -1 месяц (уменьшить на 1 )
+                monthEvent = monthEvent == 1 ? 12 : --monthEvent;
                 break;
             case R.id.go_person:
                 Log.d(LOG_TAG, "--- go_person: ---");
@@ -165,18 +227,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
         }
-
-    }
-
-    private void changesMonth(int i) {
-        calendar.add(Calendar.MONTH, i); // Увеличить на i месяцев
-        monthEvent = calendar.get(Calendar.MONTH) + 1; // +1 так как нумерация месяцев начинается с 0
         textView.setText(String.valueOf(monthEvent));//преобразуем int месяца в  String
-        Log.d(LOG_TAG, "--- month: ---" + monthEvent);
         onStart();
-//        inListMonth();
-
     }
+
 
     void msg() {
         Log.d(LOG_TAG, "--- btnMsg: ---");

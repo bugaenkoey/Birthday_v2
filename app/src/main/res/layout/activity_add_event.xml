@@ -30,18 +30,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:onClick="datePick"
             android:text="@string/date_picker" />
 
-
-
-
-        <!--        <EditText-->
-        <!--            android:id="@+id/add_date_event"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:hint="@string/date"-->
-        <!--            android:inputType="date" />-->
 
         <EditText
             android:id="@+id/add_event"
@@ -50,6 +40,7 @@
             android:layout_gravity="center_horizontal"
             android:hint="@string/event"
             android:inputType="textCapSentences" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,19 +54,19 @@
                 android:layout_height="wrap_content"
                 android:text="@string/cancel" />
 
-<!--            <Button-->
-<!--                android:id="@+id/del_event"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@string/del" />-->
-
             <Button
                 android:id="@+id/ok_event"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="on_click_add_event"
                 android:text="@string/ok" />
 
         </LinearLayout>
+
+        <ListView
+            android:id="@+id/lv_eve"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorAccent" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

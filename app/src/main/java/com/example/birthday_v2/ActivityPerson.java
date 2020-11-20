@@ -44,6 +44,7 @@ public class ActivityPerson extends AppCompatActivity implements View.OnClickLis
 //        lvPerson.setSelection(0);
         //++++++++++++++++++++++
         lvPerson.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int idPersone = person.arrayListPerson.get(position).idPerson;
@@ -52,6 +53,7 @@ public class ActivityPerson extends AppCompatActivity implements View.OnClickLis
                 Log.d(LOG_TAG, "Выбрано ->" + String.valueOf(position)
                         + " = " + parent.getAdapter().getItem(position) + " idPerson = "
                         + person.arrayListPerson.get(position).idPerson);
+
                 //++++++++
                 Intent intent = new Intent(ActivityPerson.this, ActivityAddEvent.class);
                 intent.putExtra("position", position);

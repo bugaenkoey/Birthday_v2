@@ -76,7 +76,8 @@ public class ActivityEvent extends AppCompatActivity implements View.OnClickList
         long rowID = db.insert("person", null, cv);
 
         Log.d(LOG_TAG, "row inserted person, ID = " + rowID);
-        inListEvent();
+//        inListEvent();
+        finish();
     }
 
     private void inListEvent() {
