@@ -18,7 +18,7 @@ import android.widget.ListView;
 import static com.example.birthday_v2.MainActivity.dbHelper;
 
 public class ActivityEvent extends AppCompatActivity implements View.OnClickListener {
-    Button btnGoAddEvent;
+    Button btnOk, btnCancel;
     EditText etSurname, etName, etPatronymic, etTelephone;
     Event event = new Event();
     final String LOG_TAG = "LogsActivityEvent";
@@ -33,6 +33,10 @@ public class ActivityEvent extends AppCompatActivity implements View.OnClickList
         etPatronymic = (EditText) findViewById(R.id.patronymic_person);
         etTelephone = (EditText) findViewById(R.id.telephone_person);
 
+        btnOk= (Button)findViewById(R.id.ok_person);
+        btnCancel= (Button)findViewById(R.id.cancel_person);
+        btnOk.setOnClickListener(this);
+        btnCancel.setOnClickListener(this);
 //        btnGoAddEvent = (Button) findViewById(R.id.go_add_event);
 //        btnGoAddEvent.setOnClickListener(this);
 
@@ -47,11 +51,22 @@ public class ActivityEvent extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(this, ActivityAddEvent.class);
-        startActivity(intent);
+        switch (v.getId()) {
+//            case R.id.date_pick:
+//                break;
+            case R.id.ok_person:
+                addPerson();
+                break;
+            case R.id.cancel_person:
+                finish();
+                break;
+        }
     }
+//        Intent intent = new Intent(this, ActivityAddEvent.class);
+//        startActivity(intent);
+//    }
 
-    public void add_person(View viev) {
+    public void addPerson() {
 
         // создаем объект для данных
         ContentValues cv = new ContentValues();

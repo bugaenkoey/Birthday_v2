@@ -47,6 +47,8 @@ public class ActivityPerson extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(LOG_TAG,"%%%%%%%%%%%%%%%%%%%long id ="+id+"  ---"+parent.getItemAtPosition(position));
+
                 int idPersone = person.arrayListPerson.get(position).idPerson;
                 Toast.makeText(ActivityPerson.this, "Выбрано ->" + String.valueOf(position)
                         + " = " + parent.getAdapter().getItem(position), Toast.LENGTH_SHORT).show();

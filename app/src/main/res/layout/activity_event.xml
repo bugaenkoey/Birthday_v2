@@ -77,7 +77,6 @@
                 android:id="@+id/ok_person"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="add_person"
                 android:text="@string/ok">
 
             </Button>

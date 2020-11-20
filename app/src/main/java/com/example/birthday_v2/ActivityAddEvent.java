@@ -3,6 +3,7 @@ package com.example.birthday_v2;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -28,6 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import static com.example.birthday_v2.Event.arrayListEvent;
 import static com.example.birthday_v2.MainActivity.dbHelper;
 import static com.example.birthday_v2.Person.arrayListPerson;
 
@@ -38,9 +40,10 @@ public class ActivityAddEvent extends AppCompatActivity implements View.OnClickL
     String formatDate;
     long date;//= "";
     final String LOG_TAG = "LogsActivityEvent";
+    int eventId;
     int position;
     int idPersone;
-    ArrayList arrayListEventThisPerson;
+//    ArrayList arrayListEventThisPerson;
 
 
     @Override
@@ -70,28 +73,75 @@ public class ActivityAddEvent extends AppCompatActivity implements View.OnClickL
         Log.d(LOG_TAG, "iiiiiiiiiii position = " + position);
 
 
-        arrayListEventThisPerson = new ArrayList();
-        inListEventThisPerson();
+// --       arrayListEventThisPerson = new ArrayList();
+        inListEventThisPerson();//++
         ListView lvEve = (ListView) this.findViewById(R.id.lv_eve);
         // ListView lvEvent = (ListView) this.findViewById(R.id.list_event);
         ArrayAdapter<Event> lvAdapterMonth = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
-                arrayListEventThisPerson);
+// --               arrayListEventThisPerson);
+                arrayListEvent);
         lvEve.setAdapter(lvAdapterMonth);
         lvEve.setSelection(0);
         //++++++++++++++++++++++
         lvEve.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(LOG_TAG, "%%%%%%%%%%%%%%%%%%%long id =" + id + "  --Event--"
+                        + parent.getItemAtPosition(position));
+
+                eventId = Event.arrayListEvent.get(position).getId();// Узнаем  Id события в базе данных
+                Log.d(LOG_TAG, "`````````````````" + parent.getItemAtPosition(position)
+                        + " int getEveId = " + eventId + "``````````````````");
+
                 Toast.makeText(ActivityAddEvent.this, "Выбрано ->" + String.valueOf(position)
                         + " = " + parent.getAdapter().getItem(position), Toast.LENGTH_SHORT).show();
+
+
+                AlertDialog aboutDialog = new AlertDialog.Builder(ActivityAddEvent.this).create();
+                aboutDialog.setTitle("Внимание");
+                aboutDialog.setMessage("Вы хотите удалить?");
+                aboutDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                delEvent(eventId);
+                                dialog.dismiss();
+                            }
+                        }
+                );
+                aboutDialog.show();
             }
         });
 
     }
 
+    private void delEvent(int eventId) {
+        Toast.makeText(ActivityAddEvent.this, "delete this event eventId = "
+                + eventId, Toast.LENGTH_LONG).show();
+/*
+DELETE FROM table1
+WHERE b = ‘Владимир’;
+
+//String query = "SELECT * "// + "id" + ", " + "date" + ", " + "event" + ", " + "idperson"
+//                + " FROM " + "event "
+//                +"WHERE idperson = ?";
+//        Cursor cursor = db.rawQuery(query, new String[] {"idPersone"});
+ */
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//String query ="DELETE FROM event WHERE id = ?";
+//        Cursor cursor = db.rawQuery(query, new String[] {"eventId"});
+
+     //   String[] idE ={"9"};
+//ContentValues contentValues = new ContentValues();
+        long rowID = db.delete("event","id = "+eventId,null);
+        Log.d(LOG_TAG, eventId + " row delete event, ID = " + rowID);
+        inListEventThisPerson();
+    }
+
     private void inListEventThisPerson() {
-        arrayListEventThisPerson.clear();
+//--        arrayListEventThisPerson.clear();
+        arrayListEvent.clear();//++
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         // переменные для query
@@ -132,14 +182,15 @@ public class ActivityAddEvent extends AppCompatActivity implements View.OnClickL
 
                 Log.d(LOG_TAG, ">>>>>>>>>>> c.getString(dateColIndex) " + cursor.getString(dateColIndex));
                 int thisPerson = (event.getIdPerson());
-                Log.d(LOG_TAG, "<<<<<<<<<<<" + thisPerson + "<<<<<<<<<<<<<<<<<<" );
+                Log.d(LOG_TAG, "<<<<<<<<<<<" + thisPerson + "<<<<<<<<<<<<<<<<<<");
 
                 if (thisPerson != idPersone) {
                     Log.d(LOG_TAG, idPersone + " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ if ");
                     cursor.moveToNext();
                     continue;
                 }
-                arrayListEventThisPerson.add(event);
+//--                arrayListEventThisPerson.add(event);
+                arrayListEvent.add(event);//++
                 // переход на следующую строку
                 // а если следующей нет (текущая - последняя), то false - выходим из цикла
             } while (cursor.moveToNext());
